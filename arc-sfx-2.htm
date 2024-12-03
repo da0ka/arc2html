@@ -1,0 +1,122 @@
+<!doctype html><html><head><meta charset=sjis><meta name=viewport content="width=device-width, initial-scale=1">
+<title>arc2html</title><link rel=stylesheet href="0.css"></head><body>
+<form id=uform><div style="text-align:center">
+	mode<select id=mode><option>solid tiny<option>split tiny<option>solid fast<option>split fast</select>
+	<label id><input type=file multiple id=load>LOAD</label>
+	<label id=save>Save</label>
+	<label id=kill>kill</label>
+	<label><input type=checkbox id=list>listing</label>
+	</div>
+	<ul id=flist></ul>
+</form>
+<input type=button value="sfx arcive creater(latin1 format)" id=info><script>{
+const M="<meta charset=l1><body onload='",
+L1=atob`LChjLGkpPT4oaT1jLmNoYXJDb2RlQXQoKSU2NTUzMyk+Pjg/MTI5KyIggoOEhYaHiImKi4wgjiAgkZKTlJWWl5iZmpucIJ6fIi5pbmRleE9mKGMpOmkp`,
+L2=atob`IoCBgoOEhYaHiImKi4yNjo+QkZKTlJWWl5iZmpucnZ6fIg`,
+H=[//html
+//tiny,slow
+	[//solid
+		M+"new Response(new Blob([Uint8Array.from(s.innerText",
+		L1+']).stream().pipeThrough(new DecompressionStream("deflate-raw"))).arrayBuffer().then((A,a=0)=>{for(A=new Uint8Array(A);A[a]+1;l.innerHTML+=`<li><a download="${f}"href=${URL.createObjectURL(new Blob([A.subarray(a,a+=d)]))}>${f}</a> ${d}`){var c=32,d=A[a++],f=d>>5;for(d&=31;f--;c*=256)d+=c*A[a++];for(f=a;A[a++];);f=new TextDecoder().decode(A.subarray(f,a-1))}})\'><button onclick="for(let a of links)a.click()">save</button><ol id=l></ol><noscript id=s>'
+	],[//split
+		M+"let a=Uint8Array.from(g.innerText",
+		L1+',h=[],s,n=0,i=0,b=0,c,d=&#39re~h~f=).er(ond=linkst~am(,b+=d[b,d]<a URLeco=>{))butta[b++]rray.suba(</a>[i]new 		Blob([aclickfor(eObject(document..innerHTMLc=32,,e=d>>5;d&=31;e--;c*=256)d+=c*;;	Respse(b)]spipeThrough(	Dmp~ssiS"deflate-raw"aBuffthen(g=ivar=ha.~vokA..c~at],A.(A.downloa;anchors=a.byteLength})}ff=	Uint8A(f);f[s=n];l+=`<li>javascript:g(${i++})>${	TextDddde(fs,n-1} ${d} name>`){;f[n++];);h=}});write`< ="let a of )a.()">save</><ol il></ol>iA>`&#39,e;for(;c=/[^ -}]/.exec(d);)with(d.split(c))d=join(shift());eval(d)\'><noscript id=g>'
+	],
+//big,fast
+	[//solid
+		M+"let s=g.innerText",
+		',A,f=&#39re).for(;f=on${f}rrayecoer(new =Uint(A8As of click	.subatam(buttdownload(Blob([A.innerHTML.charCodeAt(A[a++]b=`< 	="let links)s.	()"></><ol id=l></ol>`;s.length),f16A65534);a;)f['+L2+'f[--a]=a)]=a+128s)=f[s)];Respse]spipeThrough(DmpssiS"deflate-raw"))aBuffthen((A,a=0)=>{A);A[a]+1;l+=`<li><a =""h${URL.cateObjectURLa,a+=d)]))}></a> ${d}`){var c=32,d=,d>>5d&=31;f--;c*=256)d+=c*a;;);TextDddde(Af,a-1))}})&#39,a=256;for(;A=/[-]/.exec(f);)with(f.split(A))f=join(shift());eval(f)\'id=b><noscript id=g>'
+	],[//split
+		M+"let s=g.innerText",
+		',h=[],n=0,i=0,a,b=256,c,d=&#39reJhJf=IDecoZrrayYnew X=XUintWY(VW8AVond=linkstJam(,b+=d[b,d]s of ength<a URL=>{).de);butt.subaV</a>[i]XBlob([aclick	eObject(a[b++].charCoAt(for(document..innerHTML;c=32,,e=d>>5;d&=31;e--;c*=256)d+=c*;;XRespse(b)]spipeThrough(XZmpJssiS"flate-raw"))aYBuffer(then(as.lcW16AV65534b;)c['+L2+'c[--b]=b)]=b+128;s)=c[s)];b=0g=ivar=ha.JvokA.I.cJat])),A.	(A.downloa)anchors=a.byteL})}ffff[s=n];l+=`<li>Ijavascript:g(${i++})>${XTextZr(co(fs,n-1))} ${d} name>`){;f[n++];)h=}}write`< 	="let )s.	()">save</><ol il></ol>iA>`&#39,e;for(;c=/[-V-ZIJ]/.exec(d);)with(d.split(c))d=join(shift());eval(d)\'><noscript id=g>'
+	]
+],
+g=a=>document.getElementById(a), info=g("info"), ul=g("flist"), lf=g("load");
+let id=0;
+
+ul.ondragover=function(e){
+	this.className="dover";e.preventDefault();
+	e.dataTransfer.dropEffect='copy'
+};
+ul.ondragleave=function(){this.className="dpass"};
+ul.ondrop=lf.oninput=async function(e){
+	e.preventDefault(e.stopPropagation());
+	ul.className="dpass";
+	var a=0,b,c,d,f=(e.dataTransfer||this).files,r,s=0,t=0,n=[],p=0,
+		li=document.createElement("li"),ol=document.createElement("ol"),fl=g("list").checked,mode=g("mode").selectedIndex,o=mode&1?"\0":"",st=new Date;
+	ul.appendChild(li);
+	li.innerHTML="<a download='arc"+id+".htm'>arc"+id+++".htm</a>";
+	li.appendChild(ol);
+	//get names, build list
+	for(e of f)n[p++]=b=new TextEncoder().encode(c=e.name+o),
+		t+=r=e.size,a+=b.length,
+		fl&&(ol.appendChild(d=document.createElement("li")),d.innerHTML=c+" <input type=button value="+r+">");
+	if(mode&1){//split
+		//add packed names
+		n=[,await new Response(new Blob(n).stream().pipeThrough(new CompressionStream("deflate-raw"))).arrayBuffer()];
+		//add above size
+		o=new Uint8Array(6);b=d=n[p=1].byteLength;
+		console.log("names",a,"->",b);
+		for(a=0,c=32;d-=o[a++]=d&c-1;c=256)d/=c,o[0]+=32;
+		n[p-1]=o.subarray(0,a);b+=a;
+		fl&&(ol=ol.getElementsByTagName("input"));
+		for(e of f){
+			//add packed data
+			n[p+=2]=await new Response(new Blob([e=new Uint8Array(await e.arrayBuffer())]).stream().pipeThrough(new CompressionStream("deflate-raw"))).arrayBuffer();
+			o=new Uint8Array(6);b+=d=n[p].byteLength;
+			fl&&(ol[p-3>>1].value+=" -> "+d);
+			for(a=0,c=32;d-=o[a++]=d&c-1;c=256)d/=c,o[0]+=32;
+			n[p-1]=o.subarray(0,a);b+=a;s+=e.length;
+			info.value=info.style.width=(s/t*1e4|0)/100+"%"
+		}
+		o=new Uint8Array(await new Blob(n).arrayBuffer(a=b))
+	}else{//solid
+		o=new Uint8Array(a+t+p*6);a=p=0;
+		for(e of f){
+			e=new Uint8Array(await e.arrayBuffer(b=a));
+			s+=d=r=e.length;
+			info.value=info.style.width=(s/t*1e4|0)/100+"%";
+			for(c=32;d-=o[a++]=d&c-1;c=256)d/=c,o[b]+=32;
+			o.set(c=n[p++],a,a-=~c.length);
+			o.set(e,a,a+=r)
+		}
+		info.value="compressing...";
+		o=new Uint8Array(await new Response(new Blob([o.subarray(0,a)]).stream().pipeThrough(new CompressionStream("deflate-raw"))).arrayBuffer())
+	}
+	f=new Uint32Array(256);
+	for(e of o)f[e]++;r=H[mode][0];
+
+	//select escape code for \r
+	for(e=256;e;a>c&&e^39&&e^13&&(a=c,d=e))c=f[--e];
+	e=String.fromCharCode(d);
+	c=f[13];n=+!d;f=d^96?"`":'"';
+
+	//\n()*+?[\\ must be escaped in regexp
+	p=~"()*+?[\\".indexOf(e)?"\\"+e:d^10?e:"\\n";
+
+	if(c)r+=`.replace(/${p+p}|${p+String.fromCharCode(n)}/g,a=>a[0]!=a[1]?\`\\r\`:${f+(d^92?e:p)+f})`;
+	f=new Uint8Array(a+c+o.length+(r+=H[mode][1]).length);a=0;
+
+	//wirte decoder+html
+	for(e of r)f[a++]=e.charCodeAt();
+
+	//write archive data
+	if(c)for(e of o)e==13?(f[a++]=d,e=n):e==d&&(f[a++]=e=d),f[a++]=e;
+	else f.set(o,a,a+=o.length);
+
+	e=li.firstChild;c=t+" \u2192 "+a;
+	e.innerHTML+=" <u>"+c+"</u>";
+	e.href=URL.createObjectURL(new Blob([f]));
+	info.value=c+"("+(a/t*1e4|0)/100+"%)"+", "+(new Date-st)+"ms"
+};
+//remove files
+g("kill").onclick=function(){
+	for(var e=ul.getElementsByTagName("a"),b=id=0,c;c=e[b++];)c.download&&URL.revokeObjectURL(c.href);
+	if(b>1)g("info").value="removed all files",ul.innerHTML=""
+};
+//save files
+g("save").onclick=function(){
+	for(var b=ul.getElementsByTagName("a"),c=0,d;d=b[c++];)d.click();
+	if(c<2)b=this,b.innerText="miss",setTimeout(function(){b.innerText="Save"},500)
+}
+}</script><!--2024.12.1-->

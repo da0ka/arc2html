@@ -1,0 +1,66 @@
+<!doctype html><html><head><meta charset=sjis><meta name=viewport content="width=device-width, initial-scale=1">
+<title>arc2html</title><link rel=stylesheet href="0.css"></head><body>
+<form id=uform><div style="text-align:center">
+	html<select id=type><option>raw<option>shrink<option>svg</select>
+	<label id><input type=file multiple id=load>LOAD</label>
+	<label id=save>Save</label>
+	<label id=kill>kill</label>
+	<label><input type=checkbox id=list>listing</label>
+	</div>
+	<ul id=flist></ul>
+</form>
+<input type=button value="sfx arcive creater" id=info><script>{
+const H=[//html(decoders)
+	'<script>fetch``.then(a=>a.arrayBuffer().then(a=>new Response(new Blob([a.slice(554)]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).arrayBuffer().then(a=>{for(a=new Uint8Array(a),b=0;a[b]+1;l.innerHTML+=`<li><a download="${f}"href=${URL.createObjectURL(new Blob([a.subarray(b,b+=d)]))}>${f}</a> ${d}`){var b,c=32,d=a[b++],f=d>>5;for(d&=31;f--;c*=256)d+=c*a[b++];for(f=b;a[b++];);f=new TextDecoder().decode(new Uint8Array(a.subarray(f,b-1)))}})))<\/script><button onclick="for(let a of links)a.click()">save</button><ol id=l></ol><noscript>',
+	'<script>for(e=\'f=re${f})))ecoderrayuba(	tam(for(a[b++]new (Blob([a.s``.then(a=>Uint8A(a.aBufferfetchaResponselice(528)]).s).pipeThrough(DecompssionS"deflate-raw"{a=),b=0;a[b]+1;l.innerHTML+=`<li><a download=""h${URL.cateObjectURL	b,b+=d)]))}></a> ${d}`){var b,c=32,d=,d>>5;d&=31;f--;c*=256)d+=c*;b;;);TextDr().d(.s	f,b-1}}\';a=/[-]/.exec(e);)with(e.split(a))e=join(shift());eval(e)<\/script><button onclick="for(let a of links)a.click()">save</button><ol id=l></ol><noscript>',
+	'<svg onload=\'for(e=&#39f=re).lion${f})))ecoderrayuba(ccktam(	buttfor(then(a=>a[b++]new (Blob([a.sUint8A(a.aBuffer(write`< ="let a of nks)a.()">save</><ol id=l>`;fetch(""aRespsece(533)]s	pipeThrough(DecompssiS	"deflate-raw"{a=),b=0;a[b]+1;l.innerHTML+=`<><a download=""h${self.URL.cateObjectURLb,b+=d)]))}></a> ${d}`){var b,c=32,d=,d>>5;d&=31;f--;c*=256)d+=c*;b;;);TextDr(d(.sf,b-1}}&#39 ;_=/[-]/.exec(e);)with(e.split(_))e=join(shift());eval(e)\'><noscript>'
+],
+g=a=>document.getElementById(a), info=g("info"), ul=g("flist"), lf=g("load");
+let id=0;
+
+ul.ondragover=function(e){
+	this.className="dover";e.preventDefault();
+	e.dataTransfer.dropEffect='copy'
+};
+ul.ondragleave=function(){this.className="dpass"};
+ul.ondrop=lf.oninput=async function(e){
+	e.preventDefault(e.stopPropagation());
+	ul.className="dpass";
+	var a=0,b,c,d,f=(e.dataTransfer||this).files,r,s=0,t=0,n=[],o,p=0,
+		li=document.createElement("li"),ol=document.createElement("ol"),fl=g("list").checked,st=new Date;
+	ul.appendChild(li);
+	li.innerHTML="<a download='arc"+id+".htm'>arc"+id+++".htm</a>";
+	li.appendChild(ol);
+	//get names, build list
+	for(e of f)n[p++]=b=new TextEncoder().encode(c=e.name),
+		t+=r=e.size,a+=b.length+6,
+		fl&&(ol.appendChild(d=document.createElement("li")),d.innerHTML=c+" <input type=button value="+r+">");
+	//get file data
+	o=new Uint8Array(a+t);a=p=0;
+	for(e of f){
+		e=new Uint8Array(await e.arrayBuffer(b=a));
+		c=32,s+=d=r=e.length;
+		info.value=info.style.width=(s/t*1e4|0)/100+"%";
+		for(;d-=o[a++]=d&c-1;c=256)d/=c,o[b]+=32;
+		o.set(c=n[p++],a,a-=~c.length);
+		o.set(e,a,a+=r)
+	}
+	info.value="compressing...";
+	o=await new Response(new Blob([o.subarray(0,a)]).stream().pipeThrough(new CompressionStream("deflate-raw"))).arrayBuffer();
+	n=H[type.selectedIndex];s=o.byteLength+n.length;
+	a=li.firstChild;c=t+" \u2192 "+s;
+	a.innerHTML+=" <u>"+c+"</u>";
+	a.href=URL.createObjectURL(new Blob([n,o]));
+	info.value=c+"("+(s/t*1e4|0)/100+"%)"+", "+(new Date-st)+"ms"
+};
+//remove files
+g("kill").onclick=function(){
+	for(var e=ul.getElementsByTagName("a"),b=id=0,c;c=e[b++];)c.download&&URL.revokeObjectURL(c.href);
+	if(b>1)g("info").value="removed all files",ul.innerHTML=""
+};
+//save files
+g("save").onclick=function(){
+	for(var b=ul.getElementsByTagName("a"),c=0,d;d=b[c++];)d.click();
+	if(c<2)b=this,b.innerText="miss",setTimeout(function(){b.innerText="Save"},500)
+}
+}</script><!--2024.11.12-->

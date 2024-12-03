@@ -1,0 +1,38 @@
+<meta charset=sjis><title>arc-sfx</title><h2>自己展開書庫生成(self-extracting archive)</h2>
+<p>書庫はhtml形式なのでbrowserで閲覧可能。構造は非常に単純で、file名、file尺、file内容が圧縮されて格納される
+<p>複数file選択可能<input multiple type=file id=i><script>
+const D1="<meta charset=l1><body onload='new Response(new Blob([Uint8Array.from(s.innerText",
+D2=',(c,i)=>(i=c.charCodeAt()%65533)>>8?129+" \x82\x83\x84\x85\x86\x87\x88\x89\x8A\x8B\x8C \x8E  \x91\x92\x93\x94\x95\x96\x97\x98\x99\x9A\x9B\x9C \x9E\x9F".indexOf(c):i)]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).arrayBuffer().then((A,a=0)=>{for(A=new Uint8Array(A);A[a]+1;l.innerHTML+=`<li><a download="${f}"href=${URL.createObjectURL(new Blob([A.subarray(a,a+=d)]))}>${f}</a> ${d}`){var c=32,d=A[a++],f=d>>5;for(d&=31;f--;c*=256)d+=c*A[a++];for(f=a;A[a++];);f=new TextDecoder().decode(new Uint8Array(A.subarray(f,a-1)))}})\'><button onclick="for(let a of links)a.click()">save</button><ol id=l></ol><noscript id=s>';
+
+i.oninput=async function(e){
+	var a=0,c,d,f=this.files,i,r,n=[],o,p;
+	for(e of f)n.push(r=new TextEncoder().encode(e.name)),a+=r.length+e.size+6;
+	o=new Uint8Array(a);a=0;
+	for(e of f){
+		e=new Uint8Array(await e.arrayBuffer(i=a));
+		for(c=32,d=r=e.length;d-=o[a++]=d&c-1;c=256)d/=c,o[i]+=32;
+		o.set(c=n.shift(),a,a-=~c.length);
+		o.set(e,a,a+=r)
+	}
+	o=new Uint8Array(await new Response(new Blob([o.subarray(0,a)]).stream().pipeThrough(new CompressionStream("deflate-raw"))).arrayBuffer());
+	f=new Uint32Array(256);
+	for(e of o)f[e]++;r=D1;
+
+	//escape \r
+	for(e=256;e;a>c&&e^39&&e^13&&(a=c,d=e))c=f[--e];
+	c=f[13];n=+!d;f=d^96?"`":'"';
+	e=String.fromCharCode(d);
+
+	//\n()*+?[\\ must be escaped in regexp
+	p=~"()*+?[\\".indexOf(e)?"\\"+e:d^10?e:"\\n";
+	if(c)r+=`.replace(/${p+p}|${p+String.fromCharCode(n)}/g,a=>a[0]!=a[1]?\`\\r\`:${f+(d^92?e:p)+f})`;
+
+	f=new Uint8Array(a+c+o.length+(r+=D2).length);a=0;
+	//wirte decoder+html
+	for(e of r)f[a++]=e.charCodeAt();
+	//write archive data
+	if(c)for(e of o)e==13?(f[a++]=d,e=n):e==d&&(f[a++]=e=d),f[a++]=e;
+	else f.set(o,a,a+=o.length);
+	l.innerText=a;l.href=URL.createObjectURL(new Blob([f]));this.value=""
+}
+</script><a id=l download=a.htm>

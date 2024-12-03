@@ -1,0 +1,66 @@
+<!doctype html><html><head><meta charset=sjis><meta name=viewport content="width=device-width, initial-scale=1">
+<title>arc2html</title><link rel=stylesheet href="0.css"></head><body>
+<form id=uform><div style="text-align:center">
+	<label id><input type=file multiple id=load>LOAD</label>
+	<label id=kill>kill</label>
+	<label id=save>Save</label></div>
+	<ul id=flist></ul>
+</form>
+<input type=button value="archive creater" id=info><script>{
+const g=a=>document.getElementById(a),
+size=(a,b=0,c=32)=>{for(;a-=a&c-1;b++)a/=c,c=256;return++b},
+fwrite=(A,name,done)=>{
+	for(var a=A.length,c=32,e=os,f=a;a-=O[os++]=a&c-1;O[e]+=32)a/=c,c=256;
+	O.set(c=new TextEncoder().encode(name),os,os-=~c.length);
+	O.set(A,os,os+=f);done(O,f,os-e)
+};
+let a=0,O,os,fs,info=g("info"),ul=g("flist");
+ul.ondragover=function(e){
+	this.className="dover";e.preventDefault();
+	e.dataTransfer.dropEffect='copy'
+};
+ul.ondragleave=function(){this.className="dpass"};
+ul.ondrop=g("load").oninput=function(e){
+	e.preventDefault(e.stopPropagation());
+	ul.className="dpass";
+	function rate(a,z){
+		sum+=a-rate.a;rate.a=a;
+		info.value=(a/z*1e4|0)/100+"%";
+		info.style.width=(sum/fs*1e4|0)/100+"%"
+	}
+	function done(O,a,c){
+		rate(a,a);
+		if(c=f[++f.p])fr.readAsArrayBuffer(c);
+		else info.value+=", "+fs+" to "+os+"("+(os/fs*1e4|0)/100+"%)"+", "+(new Date-e)+"ms",
+			li.firstChild.href=URL.createObjectURL(new Blob([O.buffer||new Uint8Array(O)]));
+	}
+	var f=(e.dataTransfer||this).files,sum=0,fr=new FileReader,
+		li=document.createElement("li"),ol=document.createElement("ol");
+	fr.onload=function(){
+		rate.a=0,fwrite(new Uint8Array(fr.result),f[f.p].name,done)
+	};
+	// calculate sum of file size. create file list
+	ul.appendChild(li);
+	li.innerHTML="<a download='arc"+a+".a'>arc"+a+++".a</a>";
+	li.appendChild(ol);
+	for(let i=f.p=fs=os=0;e=f[i++];){
+		let l=document.createElement("li"),n=e.name,s=e.size;
+		l.innerHTML=n+" <input type=button value='"+s+"'>";
+		ol.appendChild(l),fs+=s;
+		os+=size(s)+new TextEncoder().encode(n).length+1
+	}
+	O=new Uint8Array(os+fs);
+	e=new Date;os=0;
+	fr.readAsArrayBuffer(f[f.p])
+};
+// remove files
+g("kill").onclick=function(){
+	for(var e=ul.getElementsByTagName("a"),b=a=0,c;c=e[b++];)c.download&&URL.revokeObjectURL(c.href);
+	if(b>1)g("info").value="removed all files",ul.innerHTML=""
+};
+// save files
+g("save").onclick=function(){
+	for(var b=ul.getElementsByTagName("a"),c=0,d;d=b[c++];)d.click();
+	if(c<2)b=this,b.innerText="miss",setTimeout(function(){b.innerText="Save"},500)
+}
+}</script><!--2024.2.17-->

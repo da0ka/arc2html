@@ -1,0 +1,136 @@
+<title>arc2html</title><style>*{font-family:MS Gothic,monospace}iframe{background:#ccc}iframe{width:100%;height:8em;display:block;overflow:auto}textarea{resize:none;overflow:hidden;width:100%}legend{border:1px solid #444;padding:.25em}</style>
+<h1>arc2html</h1>
+“Æ©Œ`®‚Ì‘ŒÉ‚ğì‚èo‚·’´ŠÈ’P‹ÉŠy‚¨‹CŠy‚¨‹CŒy‚¨èŒy‘«ŒyKŒyprogram‚ğĞ‰î‚µ‚Ü‚·B¡‚âJavaScript‚Å‚à—eˆÕ‚ÉÀ‘•‚Å‚«‚é‘ã‚Æ‚È‚è‚Ü‚µ‚½BŠO•”js‚É‚à—Š‚é•K—v‚Í‚ ‚è‚Ü‚¹‚ñB
+<h2>d—l</h2><ul>
+<li>‘ŒÉ‚É‚Í1ŒÂ‚Ìfile‚É‚Â‚«fileÚAfile–¼Afile’†gA‚Æ‚¢‚¤‡”Ô‚É”z’uB
+<li>file–¼‚ÍUTF8Œ`®‚Å‘‚«‚ŞBI’[‚É0‚ğ‘‚«‚ŞB
+<li>fileÚ‚Ì‘‚«‚İ—Ê‚Í‰Â•Ï’·BfileÚ‚ğL‚Æ‚·‚é‚Æ...<dl start=0>
+	<dt>0 byte–Ú<dd>ãˆÊ3bits‚Ébyte”A‰ºˆÊ5bits‚ÉL‚Ì‰ºˆÊ5bits
+	<dt>1 byte–Ú<dd>L&gt;&gt;5&amp;255
+	<dt>2 byte–ÚˆÈ~<dd>L&gt;&gt;5+8*n&amp;255
+</dl>‚Æ‚¢‚¤‹ï‡‚È‚Ì‚Å‘‚«‚İ—Ê‚ÍAL‚ª31ˆÈ‰º‚È‚ç1 byteAL‚ª8191ˆÈ‰º‚È‚ç2 bytesA2097151ˆÈ‰º‚È‚ç3 bytesA53687091ˆÈ‰º‚È‚ç4 bytes... ‚È‚Ç‚Æ‚¢‚¤“à—e‚Éˆá‚¢‚È‚¢B<p>64 bits•‚“®¬”“_‚ÅŒvZ‚µ‚Ä‚¢‚é“s‡ãAL‚Í53 bits‚Ü‚Å‚µ‚©³Šm‚É‘‚«‚ß‚Ü‚¹‚ñ
+</ul><h2>‘ŒÉ\’zprogram</h2>
+<fieldset><legend>html</legend>
+<textarea id=e0><input type=file id=i multiple><script>
+i.oninput=async function(e,n=[]){
+	for(e of this.files){
+		let a=0,b=new Uint8Array(await e.arrayBuffer()),o=new Uint8Array(7),c=32,d=b.length;
+		for(;d-=o[a++]=d&c-1;c=256)d/=c,o[0]+=32;
+		n.push(o.subarray(0,a),e.name+"\0",b)
+	}l.innerText=l.href=URL.createObjectURL(new Blob(n))
+}
+</script><a id=l download></textarea>
+<p>ã‹L‚Ìprogram‚ğ‚à‚¤­‚µT‚¦–Ú‚É‹Lq‚·‚é‚ÆˆÈ‰º‚Ì‚æ‚¤‚É‚È‚è‚Ü‚·(300 bytes)
+<textarea><input type=file multiple oninput='(async(n,u,e)=>{for(e of files){for(var a=0,b=new u(await e.arrayBuffer()),o=new u(7),c=32,d=b.length;d-=o[a++]=d&c-1;c=256)d/=c,o[0]+=32;n.push(o.slice(0,a),e.name+"\0",b)}l.innerText=l.href=self.URL.createObjectURL(new Blob(n))})([],Uint8Array)'><a id=l download></textarea>
+<h3>à–¾“I‰ğà</h3>
+<p>input—v‘f‚Émultiple‘®«‚ğ•t‚¯‚é–‚Å•¡”File‘I‘ğ‰Â”\‚ÉB
+<p>fileÚ‚Æfile–¼‚Æfile–{‘Ì‚ğo—Í”z—ñ‚É‚Ô‚¿‚ŞB
+<p>o—Í”z—ñ‚©‚çURL‚É•ÏŠ·‚µ‚Älink¶¬Bprogram‚Í‰½‚Æ‚½‚Á‚½‚Ì–ñ330 bytes‚Û‚Á‚¿‚Å‚·B</fieldset>
+<fieldset><legend>test</legend>
+<p>File button‚ğ‰Ÿ‰º‚µ‚ÄFile‘I‘ğ‘‹‚ªŒ»‚ê‚½‚çAFile‚ğ”ÍˆÍ‘I‘ğ‚µ‚ÄŠJ‚¢‚Ä‰º‚³‚¢B‚à‚µ‚­‚Í•¡”File‚ğFile button‚É’¼ÚDrag &amp; Drop‚µ‚Ä‰º‚³‚¢B
+<p>ˆ—‚ªŠ®—¹‚·‚é‚Æ‚»‚ê‚ç‚ğ‚Ü‚Æ‚ß‚½File(‘ŒÉ)‚Ìlink‚ª¶¬‚³‚ê‚Ü‚·Bclick‚·‚ê‚Îdownload‰Â”\
+<iframe src=about:blank></iframe></fieldset>
+<h2>‘ŒÉ“WŠJprogram</h2>
+<fieldset><legend>html</legend>
+<textarea id=d0><input type=file id=i>
+<button onclick="for(let a of links)a.click()">save</button>
+<button onclick="for(let a of links)self.URL.revokeObjectURL(a.href);l.innerHTML=i.value=''">kill</button>
+<script>
+i.oninput=async function(){
+	for(var A=new Uint8Array(await this.files[0].arrayBuffer()),a=0,z=A.length;a<z;l.innerHTML+='<li><a download="'+f+'" href='+URL.createObjectURL(new Blob([A.subarray(a,a+=d)]))+'>'+f+'</a> '+d){
+		var c=32,d=A[a++],f=d>>5;
+		for(d&=31;f--;c*=256)d+=c*A[a++]; //read size
+		for(f=a;A[a++];);
+		f=new TextDecoder().decode(A.subarray(f,a-1))
+	}
+}
+</script><ol id=l></textarea>
+<p>ã‹L‚Ìprogram‚©‚ç‚Ç‚¤‚Å‚à‚¢‚¢‹ó”’—Ş‚âscript—v‘f‚ğ”rœ(516 bytes)
+<textarea><input type=file id=i oninput='files[0].arrayBuffer().then(A=>{A=new Uint8Array(A);for(a=0;A[a]+1;l.innerHTML+=`<li><a download="${f}"href=${top.URL.createObjectURL(new Blob([A.subarray(a,a+=d)]))}>${f}</a> ${d}`){var a,c=32,d=A[a++],f=d>>5;for(d&=31;f--;c*=256)d+=c*A[a++];for(f=a;A[a++];);f=new TextDecoder().decode(A.subarray(f,a-1))}})'><button onclick="for(let a of links)a.click()">save</button><button onclick="for(let a of links)self.URL.revokeObjectURL(a.href);l.innerHTML=i.value=''">kill</button><ol id=l></textarea>
+<p>’n–¡‚Éˆ³k‚·‚é‚Æ‚±‚¤‚È‚é(494 bytes)
+<textarea><input type=file id=i oninput='for(a=&amp#39ecodf=re${clicker().URLl.innerHTML+=`<lirray	downloadfor(new A.suba	(eObject(buttonA[a++]>< on="let a of links)files[0].a	Buffthen(A=>{A=Uint8A	(A);a=0;A[a]+1;><a ="f}"htop..catBlob([a,a+=d)]))}>f}</a> d}`){var a,c=32,d=,d>>5;d&=31;f--;c*=256)d+=c*;a;;);TextDde(f,a-1))}a.()"></self..voka.hf);=i.value=null"></>`})&amp#39 ;e=/[-]/.exec(a);)with(a.split(e))a=join(shift());eval(a)'><ol id=l></textarea>
+<h3>à–¾“I‰ğà</h3>
+<p>‘ŒÉfile‚ğ“Ç‚İ‚ñ‚¾‚çŠi”[‚³‚ê‚Ä‚¢‚éfile‚ÌÚ‚ğ‰ğ“ÇAfile–¼‚ğ•œŒ³Afile“à—e‚ğURL‚É•ÏŠ·‚µ‚Älink¶¬B
+<p>ol—v‘f‚Éli—v‘f‚ğ’Ç‰Á‚µ‚Ä‚¢‚«Afile–¼‚ª–Ô—…‚³‚ê‚Ü‚·B
+<p>‘ŒÉ‚ğ“Ç‚İ‚Ş‚½‚Ñ‚Éol—v‘f‚ª¬’·‚µ‚Ä‚¢‚«‚â‚ª‚è‚Ü‚·BŒÌ‚Ébutton—v‘f‚Åíœ‚Å‚«‚éd—l
+</fieldset><fieldset><legend>test</legend>
+<p>File button‚ğ‰Ÿ‰º‚µ‚ÄFile‚ğ1ŒÂŠJ‚¢‚Ä‰º‚³‚¢B‚à‚µ‚­‚ÍFile‚ğ’¼ÚDrag &amp; Drop‚µ‚Ä‰º‚³‚¢B
+<p>ˆ—‚ªŠ®—¹‚·‚é‚Æ‘ŒÉ‚ÉŠÜ‚Ü‚ê‚Ä‚¢‚éFile‚Æ‚»‚ÌÚ‚ª—ñ‹“‚³‚ê‚Ü‚·B‚»‚Ìlink‚ğclick‚·‚ê‚ÎFile‚ğdownload‰Â”\B
+<p>kill‚ğ‰Ÿ‰º‚·‚é‚ÆFile‚Ö‚Ìlink‚ğ‘S‚ÄíœB
+<p>save‚ğ‰Ÿ‰º‚·‚é‚Æ¬‰Ê•¨‚ğ‘S‚Ädownload‰Â”\
+<iframe src=about:blank></iframe></fieldset>
+<h2>‰—p</h2>
+‘Oq‚Í–³ˆ³k‚Ì‘ŒÉB‚±‚±‚©‚ç‚ª–{‘è‚ÅA‘ŒÉ‚ğˆ³k‚µ‚Ä‚¢‚«‚Ü‚·B•s–{ˆÓ‚Å‚Í‚ ‚è‚Ü‚·‚ªA‘g‚İ‚İŠÖ”‚ÌCompressionStreamŒN‚ğ—˜—p‚µ‚Ü‚·B“Æ©Œ`®‚ğ‹Œê‚µ‚Ä‚¨‚«‚È‚ª‚ç‰½‚½‚é‘Ì‚½‚ç‚­cB
+<h2>ˆ³k‘ŒÉ\’zprogram</h2>
+<fieldset><legend>html</legend>
+<textarea id=e1><input type=file id=i multiple><script>
+i.oninput=async function(e){
+	var a=0,c,d,f=this.files,i,r,n=[],o;
+	for(e of f)n.push(r=new TextEncoder().encode(e.name)),a+=r.length+e.size+6;
+	o=new Uint8Array(a);a=0;
+	for(e of f){
+		e=new Uint8Array(await e.arrayBuffer(i=a));
+		for(c=32,d=r=e.length;d-=o[a++]=d&c-1;c=256)d/=c,o[i]+=32;
+		o.set(c=n.shift(),a,a-=~c.length);
+		o.set(e,a,a+=r)
+	}
+	l.href=URL.createObjectURL(new Blob([f=await new Response(new Blob([o.subarray(0,a)]).stream().pipeThrough(new CompressionStream("deflate-raw"))).arrayBuffer()]))
+	l.innerText=f.byteLength
+}
+</script><a id=l download></textarea>
+<p>1s‚Éû‚ß‚½program‚àŒä—pˆÓ(545 bytes)Bscript—v‘f‚È‚ñ‚©¢Š«‚·‚é‚Ü‚Å‚à‚È‚­oninput‘®«‚É‘Sˆ—‚ğŠi”[
+<textarea><input type=file multiple oninput='(async(a,n,u,f,c,d,e,i,r,o)=>{for(e of f)n.push(r=new TextEncoder().encode(e.name)),a+=r.length+e.size+6;o=new u(a);a=0;for(e of f){e=new u(await e.arrayBuffer(i=a));for(c=32,d=r=e.length;d-=o[a++]=d&c-1;c=256)d/=c,o[i]+=32;o.set(c=n.shift(),a,a-=~c.length);o.set(e,a,a+=r)}l.href=self.URL.createObjectURL(new Blob([f=await new Response(new Blob([o.subarray(0,a)]).stream().pipeThrough(new CompressionStream("deflate-raw"))).arrayBuffer()]));l.innerText=f.byteLength})(0,[],Uint8Array,files)'><a id=l download></textarea>
+<p>‚à‚¤­‚µ“Ç‚İ‚â‚·‚­ˆ³k‚·‚é‚ÆˆÈ‰º‚Ì‚æ‚¤‚É‚È‚é‚ç‚µ‚¢(519 bytes)
+<textarea><input type=file multiple oninput='for(e=`,a+=rTextrer(ncode.stam(rraynew 	=	Uint8A(await ));oet((	Blob([foe of f).aBuffe.length(async(n,f,c,d,e,i,r,o)=>{n.push(r=	E).e(e.name+eize+6;o);a=0;{eei=a;foc=32,d=r=e;d-=o[a++]=d&c-1;c=256)d/=c,o[i]+=32c=nhift()-=~c)e)}l.hf=self.URL.cateObjectURLf	Responseouba(0)])).pipeThrough(	CompssionS"deflate-raw")];l.inner=f})([],0,files)`;a=/[-]/.exec(e);)with(e.split(a))e=join(shift());eval(e)'><a id=l download></textarea>
+<h3>à–¾“I‰ğà</h3>
+<p>loop 1ü–Ú‚ÅUTF8•ÏŠ·Œã‚Ìfile–¼‚Æfile–{‘Ì‚ğŠi”[‚·‚é‚Ì‚É•K—v‚È—Ìˆæ‚ğŒvZB
+<p>loop 2ü–Ú‚Å‘ŒÉ\’z‚µ‚ÄarrayBuffer‚ÉŠi”[B
+<p>CompressionStream—l‚ÉarrayBuffer‚ğˆ³k‚µ‚Ä’¸‚«A‚»‚ê‚ğURL‚É•ÏŠ·‚µ‚Älink¶¬Blink•¶š‚Íˆ³kŒã‚Ìbyte”
+<h3>’Zk</h3>
+<p>loop‚ğ1ü‚¾‚¯‚É‚µ‚Ä‰¡’…O–†‚Å‚«‚Ü‚·‚ªABlob‚É‚æ‚é”z—ñ•½’R‰»‚Å’á‘¬‰»
+<textarea><input type=file id=i multiple><script>
+i.oninput=async function(e,n=[]){
+	for(e of this.files){
+		for(var a=0,b=await e.arrayBuffer(),c=32,d=b.byteLength,o=new Uint8Array(6);d-=o[a++]=d&c-1;c=256)d/=c,o[0]+=32;
+		n.push(o.slice(0,a),e.name+"\0",b)
+	}
+	l.href=URL.createObjectURL(new Blob([e=await new Response(new Blob(n).stream().pipeThrough(new CompressionStream("deflate-raw"))).arrayBuffer()]))
+	l.innerText=e.byteLength
+}
+</script><a id=l download></textarea>
+<p>1s‚Å414 bytes
+<textarea><input type=file multiple oninput='(async(e,n=[])=>{for(e of files){for(var a=0,b=await e.arrayBuffer(),c=32,d=b.byteLength,o=new Uint8Array(6);d-=o[a++]=d&c-1;c=256)d/=c,o[0]+=32;n.push(o.slice(0,a),e.name+"\0",b)}l.href=self.URL.createObjectURL(new Blob([e=await new Response(new Blob(n).stream().pipeThrough(new CompressionStream("deflate-raw"))).arrayBuffer()]));l.innerText=e.byteLength})()'><a id=l download></textarea>
+</fieldset><fieldset><legend>test</legend>
+<p>File button‚ğ‰Ÿ‰º‚µ‚ÄFile‘I‘ğ‘‹‚ªŒ»‚ê‚½‚çAFile‚ğ”ÍˆÍ‘I‘ğ‚µ‚ÄŠJ‚¢‚Ä‰º‚³‚¢B‚à‚µ‚­‚Í•¡”File‚ğFile button‚É’¼ÚDrag &amp; Drop‚µ‚Ä‰º‚³‚¢B
+<p>ˆ—‚ªŠ®—¹‚·‚é‚Æ‚»‚ê‚ç‚ğ‚Ü‚Æ‚ß‚½File(‘ŒÉ)‚Ìlink(‘ŒÉ‚Ìbyte”)‚ª¶¬‚³‚ê‚Ü‚·Bclick‚·‚ê‚Îdownload‰Â”\
+<iframe src=about:blank></iframe></fieldset>
+<h2>ˆ³k‘ŒÉ“WŠJprogram</h2>
+<fieldset><legend>html</legend>
+<textarea id=d1><input type=file id=i>
+<button onclick="for(let a of links)a.click()">save</button>
+<button onclick="for(let a of links)self.URL.revokeObjectURL(a.href);l.innerHTML=i.value=''">kill</button>
+<script>
+i.oninput=async function(){
+	for(var A=new Uint8Array(await new Response(new Blob([await this.files[0].arrayBuffer()]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).arrayBuffer()),a=0,z=A.length;a<z;l.innerHTML+='<li><a download="'+f+'" href='+URL.createObjectURL(new Blob([A.subarray(a,a+=d)]))+'>'+f+'</a> '+d){
+		var c=32,d=A[a++],f=d>>5;
+		for(d&=31;f--;c*=256)d+=c*A[a++]; //read size
+		for(f=a;A[a++];);
+		f=new TextDecoder().decode(A.subarray(f,a-1))
+	}
+}
+</script><ol id=l></textarea>
+<p>script—v‘f”rœ+minify‚Å619 bytes
+<textarea><input type=file oninput='new Response(new Blob([files[0]]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).arrayBuffer().then(a=>{for(a=new Uint8Array(a),b=0;a[b]+1;l.innerHTML+=`<li><a download="${f}"href=${self.URL.createObjectURL(new Blob([a.subarray(b,b+=d)]))}>${f}</a> ${d}`){var b,c=32,d=a[b++],f=d>>5;for(d&=31;f--;c*=256)d+=c*a[b++];for(f=b;a[b++];);f=new TextDecoder().decode(new Uint8Array(a.subarray(f,b-1)))}})'id=i><button onclick="for(let a of links)a.click()">save</button><button onclick="for(let a of links)self.URL.revokeObjectURL(a.href);l.innerHTML=i.value=''">kill</button><ol id=l></textarea>
+<p>button“®“I¶¬‚É‰Á‚¦A‚»‚Ì•¶š‚à•ÏXA‚»‚µ‚Äˆ³k(560 bytes)
+<textarea><input type=file oninput='for(e=&amp#39f=).on${f}ecoclicker(retam(rrayl.innerHTML+=`<linew Blob([download	self.URL.for(.suba(butta[b++]eObjectURL(Uint8A(a>< ="let a of links)Respse(files[0]]spipeThrough(DmpssiS"deflate-raw"))aBuffthen(a=>{a=),b=0;a[b]+1;><a 	=""h${catab,b+=d)]))}></a> ${d}`){var b,c=32,d=,d>>5;d&=31;f--;c*=256)d+=c*;b;;);TextDddde(f,b-1)))}a.()">	</voka.hf);=i.value=null"></>`})&amp#39 ;a=/[-]/.exec(e);)with(e.split(a))e=join(shift());eval(e)'id=i><ol id=l></textarea>
+</fieldset><fieldset><legend>test</legend>
+<p>File button‚ğ‰Ÿ‰º‚µ‚ÄFile‚ğ1ŒÂŠJ‚¢‚Ä‰º‚³‚¢B‚à‚µ‚­‚ÍFile‚ğ’¼ÚDrag &amp; Drop‚µ‚Ä‰º‚³‚¢B
+<p>ˆ—‚ªŠ®—¹‚·‚é‚Æ‘ŒÉ‚ÉŠÜ‚Ü‚ê‚Ä‚¢‚éFile‚Æ‚»‚ÌÚ‚ª—ñ‹“‚³‚ê‚Ü‚·B‚»‚Ìlink‚ğclick‚·‚ê‚ÎFile‚ğdownload‰Â”\B
+<p>save‚ğ‰Ÿ‰º‚·‚é‚Æ¬‰Ê•¨‚ğ‘S‚Ädownload‰Â”\
+<p>kill‚ğ‰Ÿ‰º‚·‚é‚ÆFile‚Ö‚Ìlink‚ğ‘S‚ÄíœB
+<iframe src=about:blank></iframe></fieldset>
+<h2>”õl</h2>
+‰½‹C‚É&lt;/a&gt;A&lt;/ol&gt;“™‚Ì•Â‚¶tag‚ğÈ—ª‚µ‚Ä‚¢‚Ü‚·‚ªAhtmlÅŒã‚Ì—v‘f‚Æ‚¢‚¤–‚Å“®ìã‚Í–³–â‘èB‚Ş‚µ‚ëcode golfer‚Æ‚µ‚Ä‚Ìí¯“I‚Èì–@‚Å‚·B”ñí¯‚È•û‚ÍŒˆ‚µ‚Ä^—‚µ‚È‚¢‚æ‚¤‚É(^-^;)<script>
+((a,b)=>{for(b of["e0","d0","e1","d1"])with(frames[a++].document)open(),close(write(self[b].value))})(0);
+for(let a of document.querySelectorAll("textarea"))(a.oninput=e=>{a.style.height='auto';a.style.height=a.scrollHeight+'px'})(a.rows=1)
+</script><!--2024.2.18-->

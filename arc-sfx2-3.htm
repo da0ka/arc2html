@@ -1,0 +1,96 @@
+<!doctype html><html><head><meta charset=sjis><meta name=viewport content="width=device-width, initial-scale=1">
+<title>arc2html</title><link rel=stylesheet href="0.css"></head><body>
+<form id=uform><div style="text-align:center">
+	html<select id=type><option>raw<option>tiny<option>clear</select>
+	mode<select id=mode><option>solid<option>split<option>split2</select>
+	<label id><input type=file multiple id=load>LOAD</label>
+	<label id=save>Save</label>
+	<label id=kill>kill</label>
+	<label><input type=checkbox id=list>listing</label>
+	</div>
+	<ul id=flist></ul>
+</form>
+<input type=button value="sfx arcive creater" id=info><script>{
+const H=[[//html(decoders for solid)
+	'<script>fetch``.then(a=>a.arrayBuffer().then(a=>new Response(new Blob([a.slice(554)]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).arrayBuffer().then(a=>{for(a=new Uint8Array(a),b=0;a[b]+1;l.innerHTML+=`<li><a download="${f}"href=${URL.createObjectURL(new Blob([a.subarray(b,b+=d)]))}>${f}</a> ${d}`){var b,c=32,d=a[b++],f=d>>5;for(d&=31;f--;c*=256)d+=c*a[b++];for(f=b;a[b++];);f=new TextDecoder().decode(new Uint8Array(a.subarray(f,b-1)))}})))<\/script><button onclick="for(let a of links)a.click()">save</button><ol id=l></ol><noscript>',
+	'<script>for(e=\'f=re${f})))ecoderrayuba(	tam(for(a[b++]new (Blob([a.s``.then(a=>Uint8A(a.aBufferfetchaResponselice(528)]).s).pipeThrough(DecompssionS"deflate-raw"{a=),b=0;a[b]+1;l.innerHTML+=`<li><a download=""h${URL.cateObjectURL	b,b+=d)]))}></a> ${d}`){var b,c=32,d=,d>>5;d&=31;f--;c*=256)d+=c*;b;;);TextDr().d(.s	f,b-1}}\';a=/[-]/.exec(e);)with(e.split(a))e=join(shift());eval(e)<\/script><button onclick="for(let a of links)a.click()">save</button><ol id=l></ol><noscript>',
+	'<body onload=\'for(e=&#39licckf=${reonrrayuba()))ecotam(butt	new Uint8A(a.innerHTMLfor((Blob([a.s``.then(a=>a[b++].aBufferb=`<	 ="let a of nks)a.()">save</	><ol id=l>`;fetchaRespsece(536)]).s).pipeThrough(DmpssiS"deflate-raw"{a=),b=0;a[b]+1;l+=`<><a download="f}"hself.URL.cateObjectURLb,b+=d)]))}>f}</a> d}`){var b,c=32,d=,d>>5;d&=31;f--;c*=256)d+=c*;b;;);TextDder().dde(.sf,b-1}}&#39 ;a=/[-]/.exec(e);)with(e.split(a))e=join(shift());eval(e)\'id=b><noscript>'
+],[//html(decoders for split)
+	'<script>fetch``.then(a=>a.arrayBuffer().then(async a=>{a=new Uint8Array(a.slice(790));var f,h=[],i=0,b=0,c=32,d=a[b++],e=d>>5;for(d&=31;e--;c*=256)d+=c*a[b++];f=new Uint8Array(await new Response(new Blob([a.subarray(b,b+=d)]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).arrayBuffer());for(d=0;f[c=d];h[i++]=new TextDecoder().decode(f.subarray(c,d-1)))for(;f[d++];);for(i of h){c=32,d=a[b++],e=d>>5;for(d&=31;e--;c*=256)d+=c*a[b++];f=new Uint8Array(await new Response(new Blob([a.subarray(b,b+=d)]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).arrayBuffer());l.innerHTML+=`<li><a download="${i}"href=${URL.createObjectURL(new Blob([f]))}>${i}</a> ${f.length}`}}))<\/script><button onclick="for(let a of links)a.click()">save</button><ol id=l></ol><noscript>',
+	'<script>for(e=\'++]a[ber()${reecotam(rray.suba(	.then(a))new (Blob([for(=Uint8A(a.aBuffc=32,d=,e=d>>5;d&=31;e--;c*=256)d+=c*;fwait Responsea	b,b+=d)]).s).pipeThrough(DmpssionS"deflate-raw"));fetch("")=>async a=>{a.slice(584;var f,h=[],i=0,b=0,d=0;f[c=d];h[i=TextDd.dde(f	c,d-1);f[d;);i of h){l.innerHTML+=`<li><a download="i}"hf=URL.cateObjectURLf]}>i}</a> f.length}`}}\';a=/[-]/.exec(e);)with(e.split(a))e=join(shift());eval(e)<\/script><button onclick="for(let a of links)a.click()">save</button><ol id=l></ol><noscript>',
+	'<body onload=\'for(e=&#39++]a[b of licck${re;fd=onecotam(buttrray.suba(new 	(	Blob([)).aBuffer``.then(a.innerHTML=	Uint8A(afor(c=32,,e=d>>5;d&=31;e--;c*=256)d+=c*wait 	Respseab,b+=d)]).s).pipeThrough(	DmpssiS"deflate-raw")(;b=`< ="let anks)a.()">save</><ol il></ol>`etch=>async a=>{a.sce(592;var f,h=[],i=0,b=0,0[c=d];h[i=	TextDder().dde(fc,d-1)[d;);ih){l+=`<><a downloa"i}"hf=self.URL.cateObjectURLf]}>i}</a> f.length}`}}&#39 ;a=/[-]/.exec(e);)with(e.split(a))e=join(shift());eval(e)\'id=b><noscript>'
+],[//html(decoders for split2)
+	'<script>fetch``.then(a=>a.arrayBuffer().then(a=>{a=new Uint8Array(a.slice(935));g=i=>{var[b,d]=h[i];new Response(new Blob([a.subarray(b,b+=d)]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).arrayBuffer().then(a=>{URL.revokeObjectURL(A.href=URL.createObjectURL(new Blob([a])),A.click(A.download=document.links[i].innerHTML));document.anchors[i].innerHTML=a.byteLength})};var h=[],s,n=0,i=0,b=0,c=32,d=a[b++],e=d>>5;for(d&=31;e--;c*=256)d+=c*a[b++];new Response(new Blob([a.subarray(b,b+=d)]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).arrayBuffer().then(f=>{for(f=new Uint8Array(f);f[s=n];l.innerHTML+=`<li><a href=javascript:g(${i++})>${new TextDecoder().decode(f.subarray(s,n-1))}</a> ${d} <a name></a>`){for(;f[n++];);c=32,d=a[b++],e=d>>5;for(d&=31;e--;c*=256)d+=c*a[b++];h[i]=[b,d],b+=d}})}))<\/script><button onclick="for(let a of links)a.click()">save</button><ol id=l></ol><a id=A></a><noscript>',
+	'<script>for(e=\'</a>rehf=er()];lia[b++tam(,b+=d[b,d]=0,URLeco[i].then(rray.suba(for(=>{))new 		Blob([adocument.eObject(.innerHTML.aBuff=	Uint8A(c=32,d=],e=d>>5;d&=31;e--;c*=256)d+=c*	Response(b)]).s).pipeThrough(	DmpssionS"deflate-raw")fetch``a=>aaaa.sce(700;g=ivar=h[ia.vokA..cata)],A.cck(A.download=nks;anchors=a.length})};var h=[],s,nibfff);f[s=nl+=`<><a javascript:g(${i++})>${	TextDd.dde(fs,n-1} ${d} <a name>`){;f[n++);h=}})}\';a=/[-]/.exec(e);)with(e.split(a))e=join(shift());eval(e)<\/script><button onclick="for(let a of links)a.click()">save</button><ol id=l></ol><a id=A></a><noscript>',
+	'<body onload=\'for(a=&#39re~h~f=Zer()YliXXnksW];Vd=ona[b++t~am(,b+=d[b,d]=0,eco[i]<a .then(buttrray.suba(</a>=>{))new Blob([aself.URL.cXck	for(eObjectURL(document..innerHTML.aBuffY=Uint8A(c=32,],e=d>>5;d&=31;e--;c*=256)d+=c*VRespse(b)]).s).pipeThrough(Dmp~ssiS"deflate-raw")write`< 	="let a of W)a.	()">save</><ol il></ol>iA>`;fetch``a=>aaaa.sXce(704;g=ivar=h[ia~vokA.Zc~ata)],A.	(A.downloaW;anchors=a.length})};var h=[],s,nibfff);f[s=nVl+=`<X>Zjavascript:g(${i++})>${TextDdY.dde(fs,n-1} ${d} name>`){;f[n++V);Vh=}})}&#39 ;e=/[^ -U[-}]/.exec(a);)with(a.split(e))a=join(shift());eval(a)\'><noscript>'
+]],
+g=a=>document.getElementById(a), info=g("info"), ul=g("flist"), lf=g("load");
+let id=0;
+
+ul.ondragover=function(e){
+	this.className="dover";e.preventDefault();
+	e.dataTransfer.dropEffect='copy'
+};
+ul.ondragleave=function(){this.className="dpass"};
+ul.ondrop=lf.oninput=async function(e){
+	e.preventDefault(e.stopPropagation());
+	ul.className="dpass";
+	var a=0,b,c,d,f=(e.dataTransfer||this).files,r,s=0,t=0,n=[],p=0,
+		li=document.createElement("li"),ol=document.createElement("ol"),fl=g("list").checked,mode=g("mode").selectedIndex,o=mode?"\0":"",st=new Date;
+	ul.appendChild(li);
+	li.innerHTML="<a download='arc"+id+".htm'>arc"+id+++".htm</a>";
+	li.appendChild(ol);
+
+	for(e of f)n[p++]=b=new TextEncoder().encode(c=e.name+o),
+		t+=r=e.size,a+=b.length,
+		fl&&(ol.appendChild(d=document.createElement("li")),d.innerHTML=c+" <input type=button value="+r+">");
+
+	if(mode){
+		//packed names
+		n=[,,await new Response(new Blob(n).stream().pipeThrough(new CompressionStream("deflate-raw"))).arrayBuffer()];
+		//write packed size
+		o=new Uint8Array(6);b=d=n[p=2].byteLength;
+		console.log("names",a,"->",b);
+		for(a=0,c=32;d-=o[a++]=d&c-1;c=256)d/=c,o[0]+=32;
+		n[p-1]=o.subarray(0,a);b+=a;
+		fl&&(ol=ol.getElementsByTagName("input"));
+		//write packed data
+		for(e of f){
+			n[p+=2]=await new Response(new Blob([e=await e.arrayBuffer()]).stream().pipeThrough(new CompressionStream("deflate-raw"))).arrayBuffer();
+			o=new Uint8Array(6);b+=d=n[p].byteLength;
+			fl&&(ol[p-3>>1].value+=" -> "+d);
+			for(a=0,c=32;d-=o[a++]=d&c-1;c=256)d/=c,o[0]+=32;
+			n[p-1]=o.subarray(0,a);b+=a;s+=e.byteLength;
+			info.value=info.style.width=(s/t*1e4|0)/100+"%"
+		}
+	}else{//solid
+		o=new Uint8Array(a+t+p*6);a=p=0;
+		for(e of f){
+			e=new Uint8Array(await e.arrayBuffer(b=a));
+			s+=d=r=e.length;
+			info.value=info.style.width=(s/t*1e4|0)/100+"%";
+			for(c=32;d-=o[a++]=d&c-1;c=256)d/=c,o[b]+=32;
+			o.set(c=n[p++],a,a-=~c.length);
+			o.set(e,a,a+=r)
+		}
+		info.value="compressing...";
+		o=await new Response(new Blob([o.subarray(0,a)]).stream().pipeThrough(new CompressionStream("deflate-raw"))).arrayBuffer();
+		b=o.byteLength
+	}
+	d=H[mode][type.selectedIndex];b+=d.length;
+	mode&&(n[0]=d);c=t+" \u2192 "+b;
+	a=li.firstChild;a.innerHTML+=" <u>"+c+"</u>";
+	a.href=URL.createObjectURL(new Blob(mode?n:[d,o]));
+	info.value=c+"("+(b/t*1e4|0)/100+"%)"+", "+(new Date-st)+"ms"
+};
+// remove files
+g("kill").onclick=function(){
+	for(var e=ul.getElementsByTagName("a"),b=id=0,c;c=e[b++];)c.download&&URL.revokeObjectURL(c.href);
+	if(b>1)g("info").value="removed all files",ul.innerHTML=""
+};
+// save files
+g("save").onclick=function(){
+	for(var b=ul.getElementsByTagName("a"),c=0,d;d=b[c++];)d.click();
+	if(c<2)b=this,b.innerText="miss",setTimeout(function(){b.innerText="Save"},500)
+}
+}</script><!--2024.11.16-->

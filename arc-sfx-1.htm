@@ -1,0 +1,82 @@
+<!doctype html><html><head><meta charset=sjis><meta name=viewport content="width=device-width, initial-scale=1">
+<title>arc2html</title><link rel=stylesheet href="0.css"></head><body>
+<form id=uform><div style="text-align:center">
+	<label id><input type=file multiple id=load>LOAD</label>
+	<label id=save>Save</label>
+	<label id=kill>kill</label>
+	<label><input type=checkbox id=list>listing</label>
+	</div>
+	<ul id=flist></ul>
+</form>
+<input type=button value="sfx arcive creater" id=info><script>{
+const H=[//html(decoders)
+	"<meta charset=l1><body onload='new Response(new Blob([Uint8Array.from(s.innerText",
+	',(c,i)=>(i=c.charCodeAt()%65533)>>8?129+" \x82\x83\x84\x85\x86\x87\x88\x89\x8A\x8B\x8C \x8E  \x91\x92\x93\x94\x95\x96\x97\x98\x99\x9A\x9B\x9C \x9E\x9F".indexOf(c):i)]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).arrayBuffer().then((A,a=0)=>{for(A=new Uint8Array(A);A[a]+1;l.innerHTML+=`<li><a download="${f}"href=${URL.createObjectURL(new Blob([A.subarray(a,a+=d)]))}>${f}</a> ${d}`){var c=32,d=A[a++],f=d>>5;for(d&=31;f--;c*=256)d+=c*A[a++];for(f=a;A[a++];);f=new TextDecoder().decode(new Uint8Array(A.subarray(f,a-1)))}})\'><button onclick="for(let a of links)a.click()">save</button><ol id=l></ol><noscript id=s>'
+],
+g=a=>document.getElementById(a), info=g("info"), ul=g("flist"), lf=g("load");
+let id=0;
+
+ul.ondragover=function(e){
+	this.className="dover";e.preventDefault();
+	e.dataTransfer.dropEffect='copy'
+};
+ul.ondragleave=function(){this.className="dpass"};
+ul.ondrop=lf.oninput=async function(e){
+	e.preventDefault(e.stopPropagation());
+	ul.className="dpass";
+	var a=0,b,c,d,f=(e.dataTransfer||this).files,r,s=0,t=0,n=[],o,p=0,
+		li=document.createElement("li"),ol=document.createElement("ol"),fl=g("list").checked,st=new Date;
+	ul.appendChild(li);
+	li.innerHTML="<a download='arc"+id+".htm'>arc"+id+++".htm</a>";
+	li.appendChild(ol);
+	//get names, build list
+	for(e of f)n[p++]=b=new TextEncoder().encode(c=e.name),
+		t+=r=e.size,a+=b.length+6,
+		fl&&(ol.appendChild(d=document.createElement("li")),d.innerHTML=c+" <input type=button value="+r+">");
+	//get file data
+	o=new Uint8Array(a+t);a=p=0;
+	for(e of f){
+		e=new Uint8Array(await e.arrayBuffer(b=a));
+		s+=d=r=e.length;
+		info.value=info.style.width=(s/t*1e4|0)/100+"%";
+		for(c=32;d-=o[a++]=d&c-1;c=256)d/=c,o[b]+=32;
+		o.set(c=n[p++],a,a-=~c.length);
+		o.set(e,a,a+=r)
+	}
+	info.value="compressing...";
+	o=new Uint8Array(await new Response(new Blob([o.subarray(0,a)]).stream().pipeThrough(new CompressionStream("deflate-raw"))).arrayBuffer());
+	f=new Uint32Array(256);
+	for(e of o)f[e]++;r=H[0];
+
+	//escape \r
+	for(e=256;e;a>c&&e^39&&e^13&&(a=c,d=e))c=f[--e];
+	c=f[13];n=+!d;f=d^96?"`":'"';
+	e=String.fromCharCode(d);
+
+	//\n()*+?[\\ must be escaped in regexp
+	p=~"()*+?[\\".indexOf(e)?"\\"+e:d^10?e:"\\n";
+	if(c)r+=`.replace(/${p+p}|${p+String.fromCharCode(n)}/g,a=>a[0]!=a[1]?\`\\r\`:${f+(d^92?e:p)+f})`;
+
+	f=new Uint8Array(a+c+o.length+(r+=H[1]).length);a=0;
+	//wirte decoder+html
+	for(e of r)f[a++]=e.charCodeAt();
+	//write archive data
+	if(c)for(e of o)e==13?(f[a++]=d,e=n):e==d&&(f[a++]=d,e=d),f[a++]=e;
+	else f.set(o,a,a+=o.length);
+
+	e=li.firstChild;c=t+" \u2192 "+a;
+	e.innerHTML+=" <u>"+c+"</u>";
+	e.href=URL.createObjectURL(new Blob([f]));
+	info.value=c+"("+(a/t*1e4|0)/100+"%)"+", "+(new Date-st)+"ms"
+};
+//remove files
+g("kill").onclick=function(){
+	for(var e=ul.getElementsByTagName("a"),b=id=0,c;c=e[b++];)c.download&&URL.revokeObjectURL(c.href);
+	if(b>1)g("info").value="removed all files",ul.innerHTML=""
+};
+//save files
+g("save").onclick=function(){
+	for(var b=ul.getElementsByTagName("a"),c=0,d;d=b[c++];)d.click();
+	if(c<2)b=this,b.innerText="miss",setTimeout(function(){b.innerText="Save"},500)
+}
+}</script><!--2024.11.22-->

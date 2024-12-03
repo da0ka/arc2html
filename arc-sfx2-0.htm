@@ -1,0 +1,26 @@
+<meta charset=sjis><title>arc-sfx</title><h2>自己展開書庫生成(self-extracting archive)</h2>
+<p>書庫はhtml形式なのでbrowserで閲覧可能。file名、file尺、file内容が圧縮されて格納される
+<p>fetch関数で書庫自身を読み込む事で圧縮率劣化が皆無
+<p>複数file選択可能<input multiple type=file id=i>
+<p>html<select id=type><option>raw<option>shrink<option>svg</select>
+<script>{
+const H=[//html(decoders)
+	'<script>fetch``.then(a=>a.arrayBuffer().then(a=>new Response(new Blob([a.slice(554)]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).arrayBuffer().then(a=>{for(a=new Uint8Array(a),b=0;a[b]+1;l.innerHTML+=`<li><a download="${f}"href=${URL.createObjectURL(new Blob([a.subarray(b,b+=d)]))}>${f}</a> ${d}`){var b,c=32,d=a[b++],f=d>>5;for(d&=31;f--;c*=256)d+=c*a[b++];for(f=b;a[b++];);f=new TextDecoder().decode(new Uint8Array(a.subarray(f,b-1)))}})))<\/script><button onclick="for(let a of links)a.click()">save</button><ol id=l></ol><noscript>',
+	'<script>for(e=\'ref=).${f})))rrayuba(ecode	tam(for(then(a=>a[b++]new (Blob([a.sUint8A(a.aBuffer(fetch(""aResponselice(530)]spipeThrough(DecompssionS"deflate-raw"{a=),b=0;a[b]+1;l.innerHTML+=`<li><a download=""h${URL.cateObjectURLb,b+=d)]))}></a> ${d}`){var b,c=32,d=,d>>5;d&=31;f--;c*=256)d+=c*;b;;);TextD	r(d	(.sf,b-1}}\';a=/[-]/.exec(e);)with(e.split(a))e=join(shift());eval(e)<\/script><button onclick="for(let a of links)a.click()">save</button><ol id=l></ol><noscript>',
+	'<svg onload=\'for(e=&#39f=re).lion${f})))ecoderrayuba(ccktam(	buttfor(then(a=>a[b++]new (Blob([a.sUint8A(a.aBuffer(write`< ="let a of nks)a.()">save</><ol id=l>`;fetch(""aRespsece(539)]s	pipeThrough(DecompssiS	"deflate-raw"{a=),b=0;a[b]+1;l.innerHTML+=`<><a download=""h${self.URL.cateObjectURLb,b+=d)]))}></a> ${d}`){var b,c=32,d=,d>>5;d&=31;f--;c*=256)d+=c*;b;;);TextDr(d(.sf,b-1}}&#39 ;_=/[-]/.exec(e);)with(e.split(_))e=join(shift());eval(e)\'></svg><noscript>'
+];
+i.oninput=async e=>{
+	var a=0,b,c,d,f=i.files,r,s=0,n=[],o,p=0,h=H[type.selectedIndex];
+	for(e of f)n[p++]=r=new TextEncoder().encode(e.name),a+=r.length+e.size+6;
+	o=new Uint8Array(a);a=p=0;
+	for(e of f){
+		e=new Uint8Array(await e.arrayBuffer(b=a));
+		for(c=32,s+=d=r=e.length;d-=o[a++]=d&c-1;c=256)d/=c,o[b]+=32;
+		o.set(c=n[p++],a,a-=~c.length);
+		o.set(e,a,a+=r)
+	}
+	o=await new Response(new Blob([o.subarray(0,a)]).stream().pipeThrough(new CompressionStream("deflate-raw"))).arrayBuffer();
+	l.innerText=p+" files("+s+" bytes)\u2192"+(h.length+o.byteLength)+" bytes";
+	l.href=URL.createObjectURL(new Blob([h,o]));i.value=""
+}
+}</script><a id=l download=a.htm><!--2024.11.7-->
