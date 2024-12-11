@@ -30,7 +30,7 @@ tag1=Uint8Array.from('</noscript>',a=>a.charCodeAt()),
 tag2=Uint8Array.from('</xmp>',a=>a.charCodeAt()),
 find=(P,A)=>{
 	for(let M=P.length,N=A.length-M,i=0,j;i<=N;)
-		for(j=0;A[i++]===P[j++];)if(j===M)return 1
+		for(j=0;A[i++]===P[j];)if(++j===M)return 1
 },
 g=a=>document.getElementById(a), info=g("info"), ul=g("flist"), lf=g("load");
 let id=0;
