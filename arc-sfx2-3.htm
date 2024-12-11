@@ -86,9 +86,8 @@ ul.ondrop=lf.oninput=async function(e){
 		b=o.length
 	}
 	//choice stopper of rendering binary data
-	c=type.selectedIndex;
-	s=find(tag0,o)?find(tag1,o)?find(tag2,o)?`<style>${c<2?"ol~*":"*"}{display:none}</style>`:"<xmp hidden>":"<noscript>":"<!\--";
-	d=H[mode][c];d[1]=d[0].length+d[2].length+s.length+3;d[3]=s;
+	s=find(tag0,o)?find(tag1,o)?find(tag2,o)?"<plaintext hidden>":"<xmp hidden>":"<noscript>":"<!\--";
+	d=H[mode][type.selectedIndex];d[1]=d[0].length+d[2].length+s.length+3;d[3]=s;
 
 	//result
 	d=d.join("");b+=d.length;c=t+" \u2192 "+b;
