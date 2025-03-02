@@ -12,7 +12,7 @@ self extracted archives is html format.
 * `arc-sfx2-3.htm`<p>partial browser can't open its output on local system. but its size is slightly smaller and decoding slightly faster than above's
 	* mode
 		* solid<p>solid compression
-		* split<p>split compression. extract all files a time
+		* split<p>split compression. extract all files before download
 		* split2<p>split compression. extract one files a time
 	* listing<p>create file list
 	* LOAD<p>read multiple files
