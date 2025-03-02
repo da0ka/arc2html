@@ -10,6 +10,10 @@ self extracted archives is html format.
 	* solid fast<p>solid compression, slightly bigger decoder, fast
 	* split fast<p>split compression, slightly bigger decoder, fast
 * `arc-sfx2-3.htm`[demo](https://codepen.io/xezz/pen/emOmKpz)<p>partial browser can't open its output on local system. but its size is slightly smaller and decoding slightly faster than above's
+	* html
+		* raw<p>output raw decoder
+		* tiny<p>output compressed decoder
+		* clear<p>remove compressed string after load contents
 	* mode
 		* solid<p>solid compression
 		* split<p>split compression. extract all files before download
