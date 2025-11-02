@@ -30,8 +30,8 @@ tag0=g('-->'),
 tag1=g('</noscript>'),
 tag2=g('</xmp>',g=a=>document.getElementById(a)),
 find=(P,A)=>{
-	for(let M=P.length,N=A.length-M,i=0,j;i<=N;)
-		for(j=0;A[i++]===P[j];)if(++j===M)return 1
+	for(let M=P.length,N=A.length-M,i=0,j;i<=N;i+=j||1)
+		for(j=0;P[j]===A[j+i];)if(++j===M)return 1
 },
 info=g("info"),ul=g("flist"),lf=g("load");
 ul.ondragover=function(e){
