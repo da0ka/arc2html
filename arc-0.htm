@@ -1,15 +1,15 @@
 <title>arc2html</title><style>*{font-family:MS Gothic,monospace}iframe{background:#ccc}iframe{width:100%;height:8em;display:block;overflow:auto}textarea{resize:none;overflow:hidden;width:100%}legend{border:1px solid #444;padding:.25em}</style>
 <h1>arc2html</h1>
-�Ǝ��`���̏��ɂ����o�����ȒP�Ɋy���C�y���C�y����y���y�K�yprogram���Љ�܂��B����JavaScript�ł��e�ՂɎ����ł��鎞��ƂȂ�܂����B�O��js�ɂ�����K�v�͂���܂���B
-<h2>�d�l</h2><ul>
-<li>���ɂɂ�1��file�ɂ�file�ځAfile���Afile���g�A�Ƃ������Ԃɔz�u�B
-<li>file����UTF8�`���ŏ������ށB�I�[��0���������ށB
-<li>file�ڂ̏������ݗʂ͉ϒ��Bfile�ڂ�L�Ƃ����...<dl start=0>
-	<dt>0 byte��<dd>���3bits��byte���A����5bits��L�̉���5bits
-	<dt>1 byte��<dd>L&gt;&gt;5&amp;255
-	<dt>2 byte�ڈȍ~<dd>L&gt;&gt;5+8*n&amp;255
-</dl>�Ƃ�����Ȃ̂ŏ������ݗʂ́AL��31�ȉ��Ȃ�1 byte�AL��8191�ȉ��Ȃ�2 bytes�A2097151�ȉ��Ȃ�3 bytes�A53687091�ȉ��Ȃ�4 bytes... �ȂǂƂ������e�ɈႢ�Ȃ��B<p>64 bits���������_�Ōv�Z���Ă���s����AL��53 bits�܂ł������m�ɏ������߂܂���
-</ul><h2>���ɍ\�zprogram</h2>
+独自形式の書庫を作り出す超簡単極楽お気楽お気軽お手軽足軽尻軽programを紹介します。今やJavaScriptでも容易に実装できる時代となりました。外部jsにも頼る必要はありません。
+<h2>仕様</h2><ul>
+<li>書庫には1個のfileにつきfile尺、file名、file中身、という順番に配置
+<li>file名はUTF8形式で書き込む。終端に0を書き込む
+<li>file尺の書き込み量は可変長。file尺をLとすると...<dl start=0>
+	<dt>0 byte目<dd>上位3bitsにbyte数、下位5bitsにLの下位5bits
+	<dt>1 byte目<dd>L&gt;&gt;5&amp;255
+	<dt>2 byte目以降<dd>L&gt;&gt;5+8*n&amp;255
+</dl>という具合なので書き込み量は、Lが31以下なら1 byte、Lが8191以下なら2 bytes、2097151以下なら3 bytes、53687091以下なら4 bytes... などという内容に違いない。<p>64 bits浮動小数点で計算している都合上、Lは53 bitsまでしか正確に書き込めません
+</ul><h2>書庫構築program</h2>
 <fieldset><legend>html</legend>
 <textarea id=e0><input type=file id=i multiple><script>
 i.oninput=async function(e,n=[]){
@@ -20,17 +20,17 @@ i.oninput=async function(e,n=[]){
 	}l.innerText=l.href=URL.createObjectURL(new Blob(n))
 }
 </script><a id=l download></textarea>
-<p>��L��program�����������T���ڂɋL�q����ƈȉ��̂悤�ɂȂ�܂�(300 bytes)
-<textarea><input type=file multiple oninput='(async(n,u,e)=>{for(e of files){for(var a=0,b=new u(await e.arrayBuffer()),o=new u(7),c=32,d=b.length;d-=o[a++]=d&c-1;c=256)d/=c,o[0]+=32;n.push(o.slice(0,a),e.name+"\0",b)}l.innerText=l.href=self.URL.createObjectURL(new Blob(n))})([],Uint8Array)'><a id=l download></textarea>
-<h3>�����I���</h3>
-<p>input�v�f��multiple������t���鎖�ŕ���File�I���\�ɁB
-<p>file�ڂ�file����file�{�̂��o�͔z��ɂԂ����ށB
-<p>�o�͔z�񂩂�URL�ɕϊ�����link�����Bprogram�͉��Ƃ������̖�330 bytes�ۂ����ł��B</fieldset>
+<p>上記のprogramをもう少し控え目に記述すると以下のようになります(299 bytes)
+<textarea><input type=file oninput='(async(n,u,e)=>{for(e of files){for(var a=0,b=new u(await e.arrayBuffer()),o=new u(7),c=32,d=b.length;d-=o[a++]=d&c-1;c=256)d/=c,o[0]+=32;n.push(o.slice(0,a),e.name+"\0",b)}l.innerText=l.href=self.URL.createObjectURL(new Blob(n))})([],Uint8Array)'multiple><a id=l download></textarea>
+<h3>説明的解説</h3>
+<p>input要素にmultiple属性を付ける事で複数File選択可能に。
+<p>file尺とfile名とfile本体を出力配列にぶち込む。
+<p>出力配列からURLに変換してlink生成。programは何とたったの約330 bytesぽっちです。</fieldset>
 <fieldset><legend>test</legend>
-<p>File button����������File�I�𑋂����ꂽ��AFile��͈͑I�����ĊJ���ĉ������B�������͕���File��File button�ɒ���Drag &amp; Drop���ĉ������B
-<p>��������������Ƃ������܂Ƃ߂�File(����)��link����������܂��Bclick�����download�\
+<p>File buttonを押下してFile選択窓が現れたら、Fileを範囲選択して開いて下さい。もしくは複数FileをFile buttonに直接Drag &amp; Dropして下さい。
+<p>処理が完了するとそれらをまとめたFile(書庫)のlinkが生成されます。clickすればdownload可能
 <iframe src=about:blank></iframe></fieldset>
-<h2>���ɓW�Jprogram</h2>
+<h2>書庫展開program</h2>
 <fieldset><legend>html</legend>
 <textarea id=d0><input type=file id=i>
 <button onclick="for(let a of links)a.click()">save</button>
@@ -45,23 +45,23 @@ i.oninput=async function(){
 	}
 }
 </script><ol id=l></textarea>
-<p>��L��program����ǂ��ł������󔒗ނ�script�v�f��r��(516 bytes)
+<p>上記のprogramからどうでもいい空白類やscript要素を排除(516 bytes)
 <textarea><input type=file id=i oninput='files[0].arrayBuffer().then(A=>{A=new Uint8Array(A);for(a=0;A[a]+1;l.innerHTML+=`<li><a download="${f}"href=${top.URL.createObjectURL(new Blob([A.subarray(a,a+=d)]))}>${f}</a> ${d}`){var a,c=32,d=A[a++],f=d>>5;for(d&=31;f--;c*=256)d+=c*A[a++];for(f=a;A[a++];);f=new TextDecoder().decode(A.subarray(f,a-1))}})'><button onclick="for(let a of links)a.click()">save</button><button onclick="for(let a of links)self.URL.revokeObjectURL(a.href);l.innerHTML=i.value=''">kill</button><ol id=l></textarea>
-<p>�n���Ɉ��k����Ƃ����Ȃ�(494 bytes)
-<textarea><input type=file id=i oninput='for(a=&amp#39ecodf=re${clicker().URLl.innerHTML+=`<lirray	downloadfor(new A.suba	(eObject(buttonA[a++]>< on="let a of links)files[0].a	Buffthen(A=>{A=Uint8A	(A);a=0;A[a]+1;><a ="f}"htop..catBlob([a,a+=d)]))}>f}</a> d}`){var a,c=32,d=,d>>5;d&=31;f--;c*=256)d+=c*;a;;);TextDde(f,a-1))}a.()"></self..voka.hf);=i.value=null"></>`})&amp#39 ;e=/[-]/.exec(a);)with(a.split(e))a=join(shift());eval(a)'><ol id=l></textarea>
-<h3>�����I���</h3>
-<p>����file��ǂݍ��񂾂�i�[����Ă���file�̎ڂ���ǁAfile���𕜌��Afile���e��URL�ɕϊ�����link�����B
-<p>ol�v�f��li�v�f��ǉ����Ă����Afile�����ԗ�����܂��B
-<p>���ɂ�ǂݍ��ނ��т�ol�v�f���������Ă����₪��܂��B�̂�button�v�f�ō폜�ł���d�l
+<p>地味に圧縮するとこうなる(493 bytes)
+<textarea><input type=file oninput='for(a=&amp#39ecodf=re${clicker().URLl.innerHTML+=`<lirray	downloadfor(new A.suba	(eObject(buttonA[a++]>< on="let a of links)files[0].a	Buffthen(A=>{A=Uint8A	(A);a=0;A[a]+1;><a ="f}"htop..catBlob([a,a+=d)]))}>f}</a> d}`){var a,c=32,d=,d>>5;d&=31;f--;c*=256)d+=c*;a;;);TextDde(f,a-1))}a.()"></self..voka.hf);=i.value=null"></>`})&amp#39 ;e=/[-]/.exec(a);)with(a.split(e))a=join(shift());eval(a)'id=i><ol id=l></textarea>
+<h3>説明的解説</h3>
+<p>書庫fileを読み込んだら格納されているfileの尺を解読、file名を復元、file内容をURLに変換してlink生成。
+<p>ol要素にli要素を追加していき、file名が網羅されます。
+<p>書庫を読み込むたびにol要素が成長していきやがります。故にbutton要素で削除できる仕様
 </fieldset><fieldset><legend>test</legend>
-<p>File button����������File��1�J���ĉ������B��������File�𒼐�Drag &amp; Drop���ĉ������B
-<p>��������������Ə��ɂɊ܂܂�Ă���File�Ƃ��̎ڂ��񋓂���܂��B����link��click�����File��download�\�B
-<p>kill�����������File�ւ�link��S�č폜�B
-<p>save����������Ɛ��ʕ���S��download�\
+<p>File buttonを押下してFileを1個開いて下さい。もしくはFileを直接Drag &amp; Dropして下さい。
+<p>処理が完了すると書庫に含まれているFileとその尺が列挙されます。そのlinkをclickすればFileをdownload可能。
+<p>killを押下するとFileへのlinkを全て削除。
+<p>saveを押下すると成果物を全てdownload可能
 <iframe src=about:blank></iframe></fieldset>
-<h2>���p</h2>
-�O�q�͖����k�̏��ɁB�������炪�{��ŁA���ɂ����k���Ă����܂��B�s�{�ӂł͂���܂����A�g�ݍ��݊֐���CompressionStream�N�𗘗p���܂��B�Ǝ��`�������ꂵ�Ă����Ȃ��牽����̂��炭�c�B
-<h2>���k���ɍ\�zprogram</h2>
+<h2>応用</h2>
+前述は無圧縮の書庫。ここからが本題で、書庫を圧縮していきます。不本意ではありますが、組み込み関数のCompressionStream君を利用します。独自形式を豪語しておきながら何たる体たらく…。deflate-raw形式でfile名もfileの中身もまとめて複数fileをsolid圧縮しちゃいますのだ
+<h2>圧縮書庫構築program</h2>
 <fieldset><legend>html</legend>
 <textarea id=e1><input type=file id=i multiple><script>
 i.oninput=async function(e){
@@ -78,16 +78,16 @@ i.oninput=async function(e){
 	l.innerText=f.byteLength
 }
 </script><a id=l download></textarea>
-<p>1�s�Ɏ��߂�program����p��(545 bytes)�Bscript�v�f�Ȃ񂩏�������܂ł��Ȃ�oninput�����ɑS�������i�[
+<p>1行に収めたprogramも御用意(545 bytes)。script要素なんか召喚するまでもなくoninput属性に全処理を格納
 <textarea><input type=file multiple oninput='(async(a,n,u,f,c,d,e,i,r,o)=>{for(e of f)n.push(r=new TextEncoder().encode(e.name)),a+=r.length+e.size+6;o=new u(a);a=0;for(e of f){e=new u(await e.arrayBuffer(i=a));for(c=32,d=r=e.length;d-=o[a++]=d&c-1;c=256)d/=c,o[i]+=32;o.set(c=n.shift(),a,a-=~c.length);o.set(e,a,a+=r)}l.href=self.URL.createObjectURL(new Blob([f=await new Response(new Blob([o.subarray(0,a)]).stream().pipeThrough(new CompressionStream("deflate-raw"))).arrayBuffer()]));l.innerText=f.byteLength})(0,[],Uint8Array,files)'><a id=l download></textarea>
-<p>���������ǂ݂₷�����k����ƈȉ��̂悤�ɂȂ�炵��(519 bytes)
-<textarea><input type=file multiple oninput='for(e=`,a+=rTextrer(ncode.stam(rraynew 	=	Uint8A(await ));oet((	Blob([foe of f).aBuffe.length(async(n,f,c,d,e,i,r,o)=>{n.push(r=	E).e(e.name+eize+6;o);a=0;{eei=a;foc=32,d=r=e;d-=o[a++]=d&c-1;c=256)d/=c,o[i]+=32c=nhift()-=~c)e)}l.hf=self.URL.cateObjectURLf	Responseouba(0)])).pipeThrough(	CompssionS"deflate-raw")];l.inner=f})([],0,files)`;a=/[-]/.exec(e);)with(e.split(a))e=join(shift());eval(e)'><a id=l download></textarea>
-<h3>�����I���</h3>
-<p>loop 1���ڂ�UTF8�ϊ����file����file�{�̂��i�[����̂ɕK�v�ȗ̈���v�Z�B
-<p>loop 2���ڂŏ��ɍ\�z����arrayBuffer�Ɋi�[�B
-<p>CompressionStream�l��arrayBuffer�����k���Ē����A�����URL�ɕϊ�����link�����Blink�����͈��k���byte��
-<h3>�Z�k</h3>
-<p>loop��1�������ɂ��ĉ����O���ł��܂����ABlob�ɂ��z�񕽒R���Œᑬ��
+<p>もう少し読みやすく圧縮すると以下のようになるらしい(518 bytes)
+<textarea><input type=file oninput='for(e=`,a+=rTextrer(ncode.stam(rraynew 	=	Uint8A(await ));oet((	Blob([foe of f).aBuffe.length(async(n,f,c,d,e,i,r,o)=>{n.push(r=	E).e(e.name+eize+6;o);a=0;{eei=a;foc=32,d=r=e;d-=o[a++]=d&c-1;c=256)d/=c,o[i]+=32c=nhift()-=~c)e)}l.hf=self.URL.cateObjectURLf	Responseouba(0)])).pipeThrough(	CompssionS"deflate-raw")];l.inner=f})([],0,files)`;a=/[-]/.exec(e);)with(e.split(a))e=join(shift());eval(e)'multiple><a id=l download></textarea>
+<h3>説明的解説</h3>
+<p>loop 1周目でUTF8変換後のfile名とfile本体を格納するのに必要な領域を計算。
+<p>loop 2周目で書庫構築してarrayBufferに格納。
+<p>CompressionStream様にarrayBufferを圧縮して頂き、それをURLに変換してlink生成。link文字は圧縮後のbyte数
+<h3>短縮</h3>
+<p>loopを1周だけにして横着三昧できますが、Blobによる配列平坦化で低速化
 <textarea><input type=file id=i multiple><script>
 i.oninput=async function(e,n=[]){
 	for(e of this.files){
@@ -98,13 +98,13 @@ i.oninput=async function(e,n=[]){
 	l.innerText=e.byteLength
 }
 </script><a id=l download></textarea>
-<p>1�s��414 bytes
-<textarea><input type=file multiple oninput='(async(e,n=[])=>{for(e of files){for(var a=0,b=await e.arrayBuffer(),c=32,d=b.byteLength,o=new Uint8Array(6);d-=o[a++]=d&c-1;c=256)d/=c,o[0]+=32;n.push(o.slice(0,a),e.name+"\0",b)}l.href=self.URL.createObjectURL(new Blob([e=await new Response(new Blob(n).stream().pipeThrough(new CompressionStream("deflate-raw"))).arrayBuffer()]));l.innerText=e.byteLength})()'><a id=l download></textarea>
+<p>1行で409 bytes
+<textarea><input type=file oninput='(async(g,e,f,n=[])=>{for(f of files){for(var a=0,b=await f[g](),c=32,d=b[e],o=new Uint8Array(6);d-=o[a++]=d&c-1;c=256)d/=c,o[0]+=32;n.push(o.slice(0,a),f.name+"\0",b)}l.href=self.URL.createObjectURL(new Blob([f=await new Response(new Blob(n).stream().pipeThrough(new CompressionStream("deflate-raw")))[g]()]));l.innerText=f[e]})("arrayBuffer","byteLength")'multiple><a id=l download></textarea>
 </fieldset><fieldset><legend>test</legend>
-<p>File button����������File�I�𑋂����ꂽ��AFile��͈͑I�����ĊJ���ĉ������B�������͕���File��File button�ɒ���Drag &amp; Drop���ĉ������B
-<p>��������������Ƃ������܂Ƃ߂�File(����)��link(���ɂ�byte��)����������܂��Bclick�����download�\
+<p>File buttonを押下してFile選択窓が現れたら、Fileを範囲選択して開いて下さい。もしくは複数FileをFile buttonに直接Drag &amp; Dropして下さい。
+<p>処理が完了するとそれらをまとめたFile(書庫)のlink(書庫のbyte数)が生成されます。clickすればdownload可能
 <iframe src=about:blank></iframe></fieldset>
-<h2>���k���ɓW�Jprogram</h2>
+<h2>圧縮書庫展開program</h2>
 <fieldset><legend>html</legend>
 <textarea id=d1><input type=file id=i>
 <button onclick="for(let a of links)a.click()">save</button>
@@ -119,18 +119,21 @@ i.oninput=async function(){
 	}
 }
 </script><ol id=l></textarea>
-<p>script�v�f�r��+minify��619 bytes
+<p>script要素排除+minifyで619 bytes
 <textarea><input type=file oninput='new Response(new Blob([files[0]]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).arrayBuffer().then(a=>{for(a=new Uint8Array(a),b=0;a[b]+1;l.innerHTML+=`<li><a download="${f}"href=${self.URL.createObjectURL(new Blob([a.subarray(b,b+=d)]))}>${f}</a> ${d}`){var b,c=32,d=a[b++],f=d>>5;for(d&=31;f--;c*=256)d+=c*a[b++];for(f=b;a[b++];);f=new TextDecoder().decode(new Uint8Array(a.subarray(f,b-1)))}})'id=i><button onclick="for(let a of links)a.click()">save</button><button onclick="for(let a of links)self.URL.revokeObjectURL(a.href);l.innerHTML=i.value=''">kill</button><ol id=l></textarea>
-<p>button���I�����ɉ����A���̕������ύX�A�����Ĉ��k(560 bytes)
+<p>button動的生成に加え、その文字も変更、そして圧縮(560 bytes)
 <textarea><input type=file oninput='for(e=&amp#39f=).on${f}ecoclicker(retam(rrayl.innerHTML+=`<linew Blob([download	self.URL.for(.suba(butta[b++]eObjectURL(Uint8A(a>< ="let a of links)Respse(files[0]]spipeThrough(DmpssiS"deflate-raw"))aBuffthen(a=>{a=),b=0;a[b]+1;><a 	=""h${catab,b+=d)]))}></a> ${d}`){var b,c=32,d=,d>>5;d&=31;f--;c*=256)d+=c*;b;;);TextDddde(f,b-1)))}a.()">	</voka.hf);=i.value=null"></>`})&amp#39 ;a=/[-]/.exec(e);)with(e.split(a))e=join(shift());eval(e)'id=i><ol id=l></textarea>
 </fieldset><fieldset><legend>test</legend>
-<p>File button����������File��1�J���ĉ������B��������File�𒼐�Drag &amp; Drop���ĉ������B
-<p>��������������Ə��ɂɊ܂܂�Ă���File�Ƃ��̎ڂ��񋓂���܂��B����link��click�����File��download�\�B
-<p>save����������Ɛ��ʕ���S��download�\
-<p>kill�����������File�ւ�link��S�č폜�B
+<p>File buttonを押下してFileを1個開いて下さい。もしくはFileを直接Drag &amp; Dropして下さい。
+<p>処理が完了すると書庫に含まれているFileとその尺が列挙されます。そのlinkをclickすればFileをdownload可能。
+<p>saveを押下すると成果物を全てdownload可能
+<p>killを押下するとFileへのlinkを全て削除。
 <iframe src=about:blank></iframe></fieldset>
-<h2>���l</h2>
-���C��&lt;/a&gt;�A&lt;/ol&gt;���̕�tag���ȗ����Ă��܂����Ahtml�Ō�̗v�f�Ƃ������œ����͖����B�ނ���code golfer�Ƃ��Ă̏펯�I�ȍ�@�ł��B��펯�ȕ��͌����Đ^�����Ȃ��悤��(^-^;)<script>
+<h2>圧縮書庫構築+展開program</h2>
+2つまとめて802 bytes(だがそれがどうした)
+<textarea>&lt;svg onload='for(_=`Text~var Z of Yfor(X=&gt;{XWinVVputQ+=P);NecodeK"+f+"J.VnerIreGtGam(Fid=Elic!f=,bonnew Blob(=256)d&gt;&lt;oIHTMLP"&lt;li=await &amp;amp#39rrayfiletop.URL.,c=32,d=a.suba(eObjectURL(.byteLengthbutta[b++].aBuffer()	downloadRespse(UVt8A().sF).pipeThrough(&lt;Q type= Q=&amp;#39cGat[ c!k=Xlet aYlVks)ompGssiSF"deflate-raw")))	make(async(n,f)WfYs){XZa=0f	b,o=6Nd-=o[a++]=d&amp;c-1;c/=c,o[0]P32;n.push(o.s!e(0,a),f.name+"\\0")}l.hGfnC])NlI~=f})([])&amp;#39multiplea El /ap&gt;undo[s[0]]Dec.then(aWa=a)=0;a[b]+1;a =J hG"+bPd)]))+"&gt;J&lt;/a&gt; "+d){Zb,d&gt;&gt;5;Xd&amp;=31;f--;c*Pc*;Xb;;N~DKr().dK(f-1)))}a.c!k()&gt;&lt;/Gvoka.hGfN=i.value=null&gt;&lt;/&gt;"})&amp;#39Eiol Eo&gt;`;$=/[^ "-DHLMOR-U[-}]/.exec(_);)with(_.split($))_=join(shift());write(_)'&gt;</textarea>
+<h2>備考</h2>
+何気に&lt;/a&gt;、&lt;/ol&gt;等の閉じtagを省略していますが、html最後の要素という事で動作上は無問題。むしろcode golferとしての常識的な作法です。非常識な方は決して真似しないように(^-^;)<script>
 ((a,b)=>{for(b of["e0","d0","e1","d1"])with(frames[a++].document)open(),close(write(self[b].value))})(0);
 for(let a of document.querySelectorAll("textarea"))(a.oninput=e=>{a.style.height='auto';a.style.height=a.scrollHeight+'px'})(a.rows=1)
-</script><!--2024.2.18-->
+</script>
