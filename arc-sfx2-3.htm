@@ -29,11 +29,30 @@ const H=[[//html(decoders for solid)
 tag0=g('-->'),
 tag1=g('</noscript>'),
 tag2=g('</xmp>',g=a=>document.getElementById(a)),
+info=g("info"),ul=g("flist"),lf=g("load"),
 find=(P,A)=>{
-	for(let M=P.length,N=A.length-M,i=0,j;i<=N;i+=j||1)
-		for(j=0;P[j]===A[j+i];)if(++j===M)return 1
+	let M=P.length,N=A.length;
+	if(!M)return 1;
+	if(N<M)return;
+	let B=new Int32Array(256).fill(M+1),i=M,j,l=N-M+1;
+	for(;i;)B[P[--i]]=M-i;
+	for(;i<l;i+=B[A[i+M]])
+		for(j=M;P[--j]===A[i+j];)if(!j)return 1
 },
-info=g("info"),ul=g("flist"),lf=g("load");
+worker=new Worker(`data:,
+self.onmessage=async e=>{
+	const{action,data}=e.data,z=data.length, s=new CompressionStream('deflate-raw'), w=s.writable.getWriter();
+	new Response(s.readable).arrayBuffer().then(a=>postMessage({
+		status:'success',
+		result:new Uint8Array(a),
+		inSize:z,
+		outSize:a.byteLength
+	}));
+	//processing
+	for(let a=0,b=Math.ceil(z<1e4?z/2:z<1e5?z/5:z<1e6?z/10:5e5);a<z;postMessage({status:'progress',p:a,ratio:(a/z*1e4|0)/100}))
+		await w.write(data.subarray(a,a=Math.min(a+b,z)));
+	await w.close()
+}`);
 ul.ondragover=function(e){
 	this.className="dover";e.preventDefault();
 	e.dataTransfer.dropEffect='copy'
@@ -62,14 +81,22 @@ ul.ondrop=lf.oninput=async function(e){
 		n[p-1]=o.subarray(0,a);b+=a;
 		fl&&(ol=ol.getElementsByTagName("input"));
 		//write packed data
-		for(e of f){
-			n[p+=2]=await new Response(new Blob([e=await e.arrayBuffer()]).stream().pipeThrough(new CompressionStream("deflate-raw"))).arrayBuffer();
-			o=new Uint8Array(6);b+=d=n[p].byteLength;
-			fl&&(ol[p-3>>1].value+=" -> "+d);
-			for(a=0,c=32;d-=o[a++]=d&c-1;c=256)d/=c,o[0]+=32;
-			n[p-1]=o.subarray(0,a);b+=a;s+=e.byteLength;
-			info.value=info.style.width=(s/t*1e4|0)/100+"%"
-		}o=new Uint8Array(await new Blob(n).arrayBuffer(n=null))
+		let pf=r=>e.arrayBuffer().then(a=>{
+			worker.postMessage({data:new Uint8Array(a)});
+			worker.onmessage=e=>{
+				let d=e.data;
+				if(d.status==="progress")return info.value=info.style.width=((s+d.p)/t*1e4|0)/100+"%";
+				n[p+=2]=d.result;
+				let l=d.outSize;
+				o=new Uint8Array(6);b+=l;
+				fl&&(ol[p-3>>1].value+=" -> "+l);
+				for(a=0,c=32;l-=o[a++]=l&c-1;c=256)l/=c,o[0]+=32;
+				n[p-1]=o.subarray(0,a);b+=a;s+=d.inSize;
+				info.value=info.style.width=(s/t*1e4|0)/100+"%";r()
+			}
+		});
+		for(e of f)await new Promise(pf);
+		o=new Uint8Array(await new Blob(n).arrayBuffer(n=null))
 	}else{//solid
 		o=new Uint8Array(a+t+p*6);a=p=0;
 		for(e of f){
@@ -80,9 +107,14 @@ ul.ondrop=lf.oninput=async function(e){
 			o.set(c=n[p++],a,a-=~c.length);
 			o.set(e,a,a+=r)
 		}
-		info.value="compressing...";
-		o=new Uint8Array(await new Response(new Blob([o.subarray(0,a)]).stream().pipeThrough(new CompressionStream("deflate-raw"))).arrayBuffer());
-		b=o.length
+		await new Promise(r=>{
+			worker.postMessage({data:o.subarray(0,a)});
+			worker.onmessage=e=>{
+				let d=e.data;
+				if(d.status==="progress")return info.value=info.style.width=d.ratio+"%";
+				o=d.result;b=o.length;r()
+			}
+		})
 	}
 	//choice stopper of rendering binary data
 	s=find(tag0,o)?find(tag1,o)?find(tag2,o)?"<plaintext hidden>":"<xmp hidden>":"<noscript>":"<!\--";
@@ -92,7 +124,7 @@ ul.ondrop=lf.oninput=async function(e){
 	d=d.join("");b+=d.length;c=t+" \u2192 "+b;
 	a=li.firstChild;a.innerHTML+=" <u>"+c+"</u>";
 	a.href=URL.createObjectURL(new Blob([d,o]));
-	info.value=c+"("+(b/t*1e4|0)/100+"%)"+", "+(new Date-st)+"ms"
+	info.value=`${c}(${(b/t*1e4|0)/100}%), ${new Date-st}ms`
 };
 // remove files
 g("kill").onclick=function(){
